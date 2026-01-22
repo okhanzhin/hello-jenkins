@@ -55,7 +55,7 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             element = 'CLASS'
-            excludes = ['**/App.class']
+            excludes = ['com.okhanzhin.hellojenkins.App']
 
             limit {
                 counter = 'LINE'
