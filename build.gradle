@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id("com.diffplug.spotless") version "6.25.0"
 }
 
 group = 'com.okhanzhin'
@@ -26,6 +27,19 @@ jacoco {
 test {
     useJUnit()
     finalizedBy jacocoTestReport
+}
+
+spotless {
+    java {
+        target 'src/**/*.java'
+        googleJavaFormat('1.17.0')
+                .reflowLongStrings()
+                .formatJavadoc(false)
+                .reorderImports(false)
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }
 
 jacocoTestReport {
@@ -68,4 +82,8 @@ tasks.register('printArtifacts') {
         println "JaCoCo Report: ${buildDir}/reports/jacoco/test/html/index.html"
         println "==========================================="
     }
+}
+
+tasks.named("check") {
+    dependsOn("spotlessApply")
 }
